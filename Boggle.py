@@ -2,6 +2,7 @@ import random
 import copy
 #import Cell
 #The Boggle Class
+
 class Boggle:
     def __init__(self, n):
         """Initializes the Boggle class and the board"""
@@ -26,22 +27,44 @@ class Boggle:
                 print(chr(self.ranInt),end=" ")
             print("")        
     
-          
+        self.userBoard = copy.deepcopy(self.board)
+
+    def displayBoard(self):
+        for row in self.userBoard:
+            for col in row:
+                print(col, "", end="")
+            print("")
     
-    def check_word(self, string):
+    def check_word(self, word):
      
         '''takes in a word and returns a boolean if
         the word is in the list then return true'''
 
-        word = string.split()
-        startingPoint = word[0]
         
-        #Get into the board
-        for row in range(len(self.board)):
-            for col in range(len(self.board)):
-                #Find first letter as a starting point
-                if self.board[row][col] == startingPoint:
-                    print("found ",startingPoint, "at ",row,col)
+        firstLetter = word[0]
+        lastLetter = word[0]
 
+        if len(word) == 1:
+            return True
+        else:
+            #only see shit if the firstletter is in the board
+            for row in range(len(self.board)):
+                if firstLetter in self.board[row]:
+                    #search to the right and left
+                    if word[1:] in self.board[row]:
+                        return True
+                    #Search up and down
+                    elif word[1:] not in self.board[row]:
+            
+                    #Search downward
+                        if word[1:] in self.board[row+1]:
+                            return True
 
-          
+                        #Search upward
+                        if word[1:] in self.board[row-1]:
+                            return True
+            
+        
+        self.displayBoard()
+                
+                    
